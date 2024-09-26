@@ -46,6 +46,8 @@ int main(int argc, char **argv)
 			push(&stack, line_number, value);
 		} else if (strcmp(opcode, "pall") == 0)
 			pall(&stack, line_number);
+		else if (strcmp(opcode, "pint") == 0)
+			pint(&stack, line_number);
 	} fclose(file);
 	return (EXIT_SUCCESS);
 }
