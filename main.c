@@ -1,7 +1,6 @@
 #include "monty.h"
 #include "stdlib.h"
 #include "stdio.h"
-int value;
 /**
  * main - entry point of the program
  * @argv: argument vector
@@ -12,6 +11,7 @@ int value;
 int main(int argc, char **argv)
 {
 	FILE *file;
+	int value;
 	char line[1024];
 	char *opcode, *arg;
 	unsigned int line_number = 0;
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 				return (EXIT_FAILURE);
 			}
 			value = atoi(arg);
-			push(&stack, line_number);
+			push(&stack, line_number, value);
 		} else if (strcmp(opcode, "pall") == 0)
 			pall(&stack, line_number);
 	} fclose(file);
