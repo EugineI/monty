@@ -1,7 +1,7 @@
 #include "monty.h"
 #include "stdlib.h"
 #include "stdio.h"
-
+int value;
 /**
  * main - entry point of the program
  * @argv: argument vector
@@ -12,9 +12,8 @@
 int main(int argc, char **argv)
 {
 	FILE *file;
-	char *line = NULL, *opcode, *arg;
-	size_t len = 0;
-	int flow;
+	char line[1024];
+	char *opcode, *arg;
 	unsigned int line_number = 0;
 	stack_t *stack = NULL;
 
@@ -28,8 +27,7 @@ int main(int argc, char **argv)
 		printf("Error: Can't open file %s\n", argv[1]);
 		return (EXIT_FAILURE);
 	}
-	flow = getline(&line, &len, file);
-	while (flow != -1)
+	while (fgets(line, sizeof(line), file) != NULL)
 	{
 		line_number++;
 		opcode = strtok(line, " \n\t");
@@ -42,14 +40,12 @@ int main(int argc, char **argv)
 			{
 				printf("L%u: usage: push integer\n", line_number);
 				fclose(file);
-				free(line);
 				return (EXIT_FAILURE);
 			}
 			value = atoi(arg);
 			push(&stack, line_number);
 		} else if (strcmp(opcode, "pall") == 0)
 			pall(&stack, line_number);
-	} free(line);
-	fclose(file);
+	} fclose(file);
 	return (EXIT_SUCCESS);
 }
